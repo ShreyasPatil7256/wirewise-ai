@@ -13,6 +13,7 @@ import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppProjectsRouteImport } from './routes/app/projects'
+import { Route as AppDocsRouteImport } from './routes/app/docs'
 import { Route as AppArchitectureRouteImport } from './routes/app/architecture'
 import { Route as AppIntegrationsSupabaseRouteImport } from './routes/app/integrations.supabase'
 import { Route as AppIntegrationsGithubRouteImport } from './routes/app/integrations.github'
@@ -37,6 +38,11 @@ const AppProjectsRoute = AppProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppDocsRoute = AppDocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppArchitectureRoute = AppArchitectureRouteImport.update({
   id: '/architecture',
   path: '/architecture',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
   '/app/architecture': typeof AppArchitectureRoute
+  '/app/docs': typeof AppDocsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/': typeof AppIndexRoute
   '/app/integrations/github': typeof AppIntegrationsGithubRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/architecture': typeof AppArchitectureRoute
+  '/app/docs': typeof AppDocsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app': typeof AppIndexRoute
   '/app/integrations/github': typeof AppIntegrationsGithubRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
   '/app/architecture': typeof AppArchitectureRoute
+  '/app/docs': typeof AppDocsRoute
   '/app/projects': typeof AppProjectsRoute
   '/app/': typeof AppIndexRoute
   '/app/integrations/github': typeof AppIntegrationsGithubRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/app/architecture'
+    | '/app/docs'
     | '/app/projects'
     | '/app/'
     | '/app/integrations/github'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/app/architecture'
+    | '/app/docs'
     | '/app/projects'
     | '/app'
     | '/app/integrations/github'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/app/architecture'
+    | '/app/docs'
     | '/app/projects'
     | '/app/'
     | '/app/integrations/github'
@@ -144,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProjectsRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/docs': {
+      id: '/app/docs'
+      path: '/docs'
+      fullPath: '/app/docs'
+      preLoaderRoute: typeof AppDocsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/architecture': {
       id: '/app/architecture'
       path: '/architecture'
@@ -170,6 +189,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppArchitectureRoute: typeof AppArchitectureRoute
+  AppDocsRoute: typeof AppDocsRoute
   AppProjectsRoute: typeof AppProjectsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppIntegrationsGithubRoute: typeof AppIntegrationsGithubRoute
@@ -178,6 +198,7 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppArchitectureRoute: AppArchitectureRoute,
+  AppDocsRoute: AppDocsRoute,
   AppProjectsRoute: AppProjectsRoute,
   AppIndexRoute: AppIndexRoute,
   AppIntegrationsGithubRoute: AppIntegrationsGithubRoute,
