@@ -13,6 +13,7 @@ import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppProjectsRouteImport } from './routes/app/projects'
+import { Route as AppIntegrationsSupabaseRouteImport } from './routes/app/integrations.supabase'
 import { Route as AppIntegrationsGithubRouteImport } from './routes/app/integrations.github'
 
 const AppRouteRoute = AppRouteRouteImport.update({
@@ -35,6 +36,11 @@ const AppProjectsRoute = AppProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppIntegrationsSupabaseRoute = AppIntegrationsSupabaseRouteImport.update({
+  id: '/integrations/supabase',
+  path: '/integrations/supabase',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppIntegrationsGithubRoute = AppIntegrationsGithubRouteImport.update({
   id: '/integrations/github',
   path: '/integrations/github',
@@ -47,12 +53,14 @@ export interface FileRoutesByFullPath {
   '/app/projects': typeof AppProjectsRoute
   '/app/': typeof AppIndexRoute
   '/app/integrations/github': typeof AppIntegrationsGithubRoute
+  '/app/integrations/supabase': typeof AppIntegrationsSupabaseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/projects': typeof AppProjectsRoute
   '/app': typeof AppIndexRoute
   '/app/integrations/github': typeof AppIntegrationsGithubRoute
+  '/app/integrations/supabase': typeof AppIntegrationsSupabaseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/app/projects': typeof AppProjectsRoute
   '/app/': typeof AppIndexRoute
   '/app/integrations/github': typeof AppIntegrationsGithubRoute
+  '/app/integrations/supabase': typeof AppIntegrationsSupabaseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -70,8 +79,14 @@ export interface FileRouteTypes {
     | '/app/projects'
     | '/app/'
     | '/app/integrations/github'
+    | '/app/integrations/supabase'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/projects' | '/app' | '/app/integrations/github'
+  to:
+    | '/'
+    | '/app/projects'
+    | '/app'
+    | '/app/integrations/github'
+    | '/app/integrations/supabase'
   id:
     | '__root__'
     | '/'
@@ -79,6 +94,7 @@ export interface FileRouteTypes {
     | '/app/projects'
     | '/app/'
     | '/app/integrations/github'
+    | '/app/integrations/supabase'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,6 +132,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProjectsRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/integrations/supabase': {
+      id: '/app/integrations/supabase'
+      path: '/integrations/supabase'
+      fullPath: '/app/integrations/supabase'
+      preLoaderRoute: typeof AppIntegrationsSupabaseRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/integrations/github': {
       id: '/app/integrations/github'
       path: '/integrations/github'
@@ -130,12 +153,14 @@ interface AppRouteRouteChildren {
   AppProjectsRoute: typeof AppProjectsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppIntegrationsGithubRoute: typeof AppIntegrationsGithubRoute
+  AppIntegrationsSupabaseRoute: typeof AppIntegrationsSupabaseRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppProjectsRoute: AppProjectsRoute,
   AppIndexRoute: AppIndexRoute,
   AppIntegrationsGithubRoute: AppIntegrationsGithubRoute,
+  AppIntegrationsSupabaseRoute: AppIntegrationsSupabaseRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
