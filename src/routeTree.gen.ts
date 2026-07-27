@@ -9,38 +9,176 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppSettingsRouteImport } from './routes/app/settings'
+import { Route as AppSecurityRouteImport } from './routes/app/security'
+import { Route as AppProjectsRouteImport } from './routes/app/projects'
+import { Route as AppDocsRouteImport } from './routes/app/docs'
+import { Route as AppArchitectureRouteImport } from './routes/app/architecture'
+import { Route as AppIntegrationsSupabaseRouteImport } from './routes/app/integrations.supabase'
+import { Route as AppIntegrationsGithubRouteImport } from './routes/app/integrations.github'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSecurityRoute = AppSecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppProjectsRoute = AppProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppDocsRoute = AppDocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppArchitectureRoute = AppArchitectureRouteImport.update({
+  id: '/architecture',
+  path: '/architecture',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppIntegrationsSupabaseRoute = AppIntegrationsSupabaseRouteImport.update({
+  id: '/integrations/supabase',
+  path: '/integrations/supabase',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppIntegrationsGithubRoute = AppIntegrationsGithubRouteImport.update({
+  id: '/integrations/github',
+  path: '/integrations/github',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/app/architecture': typeof AppArchitectureRoute
+  '/app/docs': typeof AppDocsRoute
+  '/app/projects': typeof AppProjectsRoute
+  '/app/security': typeof AppSecurityRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/': typeof AppIndexRoute
+  '/app/integrations/github': typeof AppIntegrationsGithubRoute
+  '/app/integrations/supabase': typeof AppIntegrationsSupabaseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/app/architecture': typeof AppArchitectureRoute
+  '/app/docs': typeof AppDocsRoute
+  '/app/projects': typeof AppProjectsRoute
+  '/app/security': typeof AppSecurityRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app': typeof AppIndexRoute
+  '/app/integrations/github': typeof AppIntegrationsGithubRoute
+  '/app/integrations/supabase': typeof AppIntegrationsSupabaseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/app/architecture': typeof AppArchitectureRoute
+  '/app/docs': typeof AppDocsRoute
+  '/app/projects': typeof AppProjectsRoute
+  '/app/security': typeof AppSecurityRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/': typeof AppIndexRoute
+  '/app/integrations/github': typeof AppIntegrationsGithubRoute
+  '/app/integrations/supabase': typeof AppIntegrationsSupabaseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/app/architecture'
+    | '/app/docs'
+    | '/app/projects'
+    | '/app/security'
+    | '/app/settings'
+    | '/app/'
+    | '/app/integrations/github'
+    | '/app/integrations/supabase'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/app/architecture'
+    | '/app/docs'
+    | '/app/projects'
+    | '/app/security'
+    | '/app/settings'
+    | '/app'
+    | '/app/integrations/github'
+    | '/app/integrations/supabase'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/app/architecture'
+    | '/app/docs'
+    | '/app/projects'
+    | '/app/security'
+    | '/app/settings'
+    | '/app/'
+    | '/app/integrations/github'
+    | '/app/integrations/supabase'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +186,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/security': {
+      id: '/app/security'
+      path: '/security'
+      fullPath: '/app/security'
+      preLoaderRoute: typeof AppSecurityRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/projects': {
+      id: '/app/projects'
+      path: '/projects'
+      fullPath: '/app/projects'
+      preLoaderRoute: typeof AppProjectsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/docs': {
+      id: '/app/docs'
+      path: '/docs'
+      fullPath: '/app/docs'
+      preLoaderRoute: typeof AppDocsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/architecture': {
+      id: '/app/architecture'
+      path: '/architecture'
+      fullPath: '/app/architecture'
+      preLoaderRoute: typeof AppArchitectureRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/integrations/supabase': {
+      id: '/app/integrations/supabase'
+      path: '/integrations/supabase'
+      fullPath: '/app/integrations/supabase'
+      preLoaderRoute: typeof AppIntegrationsSupabaseRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/integrations/github': {
+      id: '/app/integrations/github'
+      path: '/integrations/github'
+      fullPath: '/app/integrations/github'
+      preLoaderRoute: typeof AppIntegrationsGithubRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
+interface AppRouteRouteChildren {
+  AppArchitectureRoute: typeof AppArchitectureRoute
+  AppDocsRoute: typeof AppDocsRoute
+  AppProjectsRoute: typeof AppProjectsRoute
+  AppSecurityRoute: typeof AppSecurityRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppIntegrationsGithubRoute: typeof AppIntegrationsGithubRoute
+  AppIntegrationsSupabaseRoute: typeof AppIntegrationsSupabaseRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppArchitectureRoute: AppArchitectureRoute,
+  AppDocsRoute: AppDocsRoute,
+  AppProjectsRoute: AppProjectsRoute,
+  AppSecurityRoute: AppSecurityRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppIntegrationsGithubRoute: AppIntegrationsGithubRoute,
+  AppIntegrationsSupabaseRoute: AppIntegrationsSupabaseRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
